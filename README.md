@@ -1,5 +1,3 @@
-Bien sûr, voici un résumé au format Markdown reflétant les dernières modifications :
-
 ```markdown
 # Déploiement sur Azure avec Terraform et Helm
 
@@ -52,8 +50,91 @@ terraform destroy
 
 **Note:** Personnalisez les valeurs des variables Terraform dans `terraform.tfvars` et assurez-vous d'utiliser les versions appropriées des Helm charts.
 
-## Fichiers Terraform Providers Locaux
+## Code Terraform pour le déploiement sur Azure
 
-Les fichiers Terraform providers locaux pour Helm et Local ont été ajoutés.
+### Resource Group
 
-Consultez la documentation officielle pour des détails spécifiques et des mises à jour.
+```hcl
+# Ajoutez le code Terraform pour créer le resource group ici
+```
+
+### Virtual Network et Subnet
+
+```hcl
+# Ajoutez le code Terraform pour créer le Virtual Network et le Subnet ici
+```
+
+### Azure Kubernetes Service (AKS)
+
+```hcl
+# Ajoutez le code Terraform pour créer l'Azure Kubernetes Service (AKS) ici
+```
+
+## Installation des Helm Charts
+
+### Contrôleur Ingress Nginx
+
+```bash
+# Ajoutez le code pour installer le Helm chart Ingress Nginx ici
+```
+
+### Redis
+
+```bash
+# Ajoutez le code pour installer le Helm chart Redis ici
+```
+
+### KubeCost (Bonus)
+
+```bash
+# Ajoutez le code pour installer le Helm chart KubeCost ici
+```
+
+## Pipeline CI/CD
+
+1. Terraform Init et Validate
+2. Terraform Plan
+3. Exécuter InfraCost (Bonus)
+4. Attendre la validation manuelle pour Terraform Apply
+
+```yaml
+# Exemple de fichier .github/workflows/ci-cd-pipeline.yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.1.0
+
+      - name: Terraform Init and Validate
+        run: |
+          terraform init
+          terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      - name: Execute InfraCost (Bonus)
+        run: infracost --tfdir .terraform/providers/registry.terraform.io/hashicorp/
+
+      - name: Wait for Manual Approval
+        if: github.event_name != 'pull_request'
+        run: |
+          echo "Waiting for manual approval..."
+          sleep 120 # Adjust the wait time as needed
+          echo "Manual approval received, proceeding with Terraform Apply"
+          terraform apply tfplan
+```
