@@ -1,3 +1,4 @@
+Bien sûr, voici un résumé au format Markdown reflétant les dernières modifications :
 
 ```markdown
 # Déploiement sur Azure avec Terraform et Helm
@@ -51,7 +52,9 @@ terraform destroy
 
 **Note:** Personnalisez les valeurs des variables Terraform dans `terraform.tfvars` et assurez-vous d'utiliser les versions appropriées des Helm charts.
 
+## Fichiers Terraform Providers Locaux
+
+Les fichiers Terraform providers locaux pour Helm et Local ont été ajoutés.
+
 Consultez la documentation officielle pour des détails spécifiques et des mises à jour.
 ```
-
-Ce résumé fournit une vue d'ensemble du processus, des prérequis, de la configuration Terraform, de l'installation des Helm charts, et du nettoyage des ressources Azure. Veillez à personnaliser les valeurs en fonction de votre configuration et à consulter les documents officiels pour les versions spécifiques.
