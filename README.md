@@ -103,29 +103,6 @@ resource "azurerm_kubernetes_cluster" "example" {
 }
 ```
 
-## Installation des Helm Charts
-
-### Contrôleur Ingress Nginx
-
-```bash
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm install nginx-ingress ingress-nginx/ingress-nginx
-```
-
-### Redis
-
-```bash
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install my-redis bitnami/redis
-```
-
-### KubeCost (Bonus)
-
-```bash
-helm repo add kubecost https://kubecost.github.io/cost-analyzer/
-helm install kubecost kubecost/cost-analyzer
-```
-
 ## Pipeline CI/CD
 
 1. Terraform Init et Validate
