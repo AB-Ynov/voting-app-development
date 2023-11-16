@@ -1,27 +1,29 @@
-# variables.tf
-
-variable "azure_subscription_id" {
-  description = "Azure Subscription ID"
+variable "subscription_id" {
+  description = "ID de l'abonnement Azure"
   type        = string
 }
 
-variable "azure_client_id" {
-  description = "Azure Client ID"
+variable "location" {
+  description = "Emplacement pour les ressources Azure"
   type        = string
 }
 
-variable "azure_client_secret" {
-  description = "Azure Client Secret"
+variable "resource_group_name" {
+  description = "Nom du groupe de ressources Azure"
   type        = string
 }
 
-variable "azure_tenant_id" {
-  description = "Azure Tenant ID"
+variable "virtual_network_name" {
+  description = "Nom du réseau virtuel Azure"
   type        = string
 }
 
-variable "random_seed" {
-  description = "Seed for the random provider"
-  type        = number
-  default     = 42
+variable "subnet_name" {
+  description = "Nom du sous-réseau Azure"
+  type        = string
+}
+
+variable "aks_cluster_name" {
+  description = "Nom du cluster Azure Kubernetes Service (AKS)"
+  type        = string
 }
