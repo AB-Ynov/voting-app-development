@@ -1,6 +1,0 @@
-subscription_id       = "1e53b2a5-6f7d-4bd2-8e9c-0ff380501921"
-location              = "westeurope"
-resource_group_name   = "cloud-shell-storage-westeurope"
-virtual_network_name  = "my-vnet"
-subnet_name           = "my-subnet"
-aks_cluster_name      = "my-aks-cluster"
