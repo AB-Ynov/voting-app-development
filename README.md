@@ -6,11 +6,11 @@
 - Terraform
 - Azure CLI
 - Helm
-
+terraform.tfvars` avec vos informations Azure.
 ## Configuration Azure
 
 1. Clonez le référentiel.
-2. Créez un fichier `terraform.tfvars` avec vos informations Azure.
+2. Créez un fichier `
 
 ## Configuration Terraform
 
