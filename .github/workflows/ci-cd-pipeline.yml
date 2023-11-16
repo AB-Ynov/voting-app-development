@@ -53,5 +53,5 @@ jobs:
         run: echo "Waiting for manual approval"
 
       - name: Terraform Apply
-        if: github.event_name == 'workflow_run' && github.event.workflow_run.event == 'workflow_run.completed' && needs.terraform.outcome == 'success' && needs.infra-cost.outcome == 'success' && steps.manual-approval.conclusion == 'success'
+        if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && needs.terraform.outcome == 'success' && needs.infra-cost.outcome == 'success' && steps.manual-approval.conclusion == 'success'
         run: terraform apply tfplan
