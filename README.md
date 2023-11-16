@@ -50,24 +50,57 @@ terraform destroy
 
 **Note:** Personnalisez les valeurs des variables Terraform dans `terraform.tfvars` et assurez-vous d'utiliser les versions appropriées des Helm charts.
 
-## Code Terraform pour le déploiement sur Azure
+# Code Terraform pour le Déploiement sur Azure
 
-### Resource Group
+## Resource Group
 
 ```hcl
-# Ajoutez le code Terraform pour créer le resource group ici
+# Déclaration du provider Azure
+provider "azurerm" {
+  features = {}
+}
+
+# Déclaration du Resource Group
+resource "azurerm_resource_group" "example" {
+  name     = var.resource_group_name  # Remplacez par le nom souhaité pour votre Resource Group
+  location = var.location             # Remplacez par la région Azure souhaitée, par exemple "West Europe"
+}
 ```
 
 ### Virtual Network et Subnet
 
-```hcl
-# Ajoutez le code Terraform pour créer le Virtual Network et le Subnet ici
-```
-
-### Azure Kubernetes Service (AKS)
+Pour déployer un Virtual Network avec un Subnet associé sur Azure, vous pouvez utiliser le code Terraform suivant :
 
 ```hcl
-# Ajoutez le code Terraform pour créer l'Azure Kubernetes Service (AKS) ici
+# Déclaration du Virtual Network
+resource "azurerm_virtual_network" "example" {
+  name                = var.virtual_network_name   # Remplacez par le nom souhaité pour votre Virtual Network
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+}
+
+# Déclaration du Subnet
+resource "azurerm_subnet" "example" {
+  name                 = var.subnet_name            # Remplacez par le nom souhaité pour votre Subnet
+  resource_group_name  = azurerm_resource_group.example.name
+  virtual_network_name = azurerm_virtual_network.example.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
+# Déclaration de l'Azure Kubernetes Service (AKS)
+resource "azurerm_kubernetes_cluster" "example" {
+  name                = var.aks_cluster_name      # Remplacez par le nom souhaité pour votre cluster AKS
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  dns_prefix          = var.aks_cluster_name      # Remplacez par le préfixe DNS souhaité pour votre cluster AKS
+
+  default_node_pool {
+    name       = "default"
+    node_count = 1
+    vm_size    = "Standard_DS2_v2"                # Choisissez la taille de la machine virtuelle appropriée
+  }
+}
 ```
 
 ## Installation des Helm Charts
@@ -75,19 +108,22 @@ terraform destroy
 ### Contrôleur Ingress Nginx
 
 ```bash
-# Ajoutez le code pour installer le Helm chart Ingress Nginx ici
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm install nginx-ingress ingress-nginx/ingress-nginx
 ```
 
 ### Redis
 
 ```bash
-# Ajoutez le code pour installer le Helm chart Redis ici
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install my-redis bitnami/redis
 ```
 
 ### KubeCost (Bonus)
 
 ```bash
-# Ajoutez le code pour installer le Helm chart KubeCost ici
+helm repo add kubecost https://kubecost.github.io/cost-analyzer/
+helm install kubecost kubecost/cost-analyzer
 ```
 
 ## Pipeline CI/CD
