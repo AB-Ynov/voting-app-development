@@ -57,4 +57,3 @@ terraform destroy
 Les fichiers Terraform providers locaux pour Helm et Local ont été ajoutés.
 
 Consultez la documentation officielle pour des détails spécifiques et des mises à jour.
-```
