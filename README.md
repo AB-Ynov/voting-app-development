@@ -4,9 +4,45 @@
 ## Prérequis
 
 - Terraform
+```bash
+# Téléchargez le binaire Terraform pour Linux
+curl -O https://releases.hashicorp.com/terraform/0.14.9/terraform_0.14.9_linux_amd64.zip
+
+# Extrayez le fichier ZIP
+unzip terraform_0.14.9_linux_amd64.zip
+
+# Déplacez le binaire dans un répertoire accessible par votre $PATH
+sudo mv terraform /usr/local/bin/
+
+# Vérifiez l'installation
+terraform --version
+```
+
 - Azure CLI
+```bash
+# Téléchargez le script d'installation pour Linux
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+# Vérifiez l'installation
+az --version
+```
+
 - Helm
+```bash
+# Téléchargez le script d'installation Helm
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+```
+
 terraform.tfvars` avec vos informations Azure.
+```hcl
+# terraform.tfvars
+
+client_id       = "your-azure-client-id"
+client_secret   = "your-azure-client-secret"
+tenant_id       = "your-azure-tenant-id"
+subscription_id = "your-azure-subscription-id"
+```
+
 ## Configuration Azure
 
 1. Clonez le référentiel.
