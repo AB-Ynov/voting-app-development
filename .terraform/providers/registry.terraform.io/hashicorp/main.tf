@@ -33,3 +33,24 @@ resource "azurerm_kubernetes_cluster" "example" {
     vm_size    = "Standard_DS2_v2"
   }
 }
+
+resource "helm_release" "nginx_ingress" {
+  name       = "nginx-ingress"
+  repository = "https://kubernetes.github.io/ingress-nginx"
+  chart      = "ingress-nginx"
+  namespace  = "default"
+}
+
+resource "helm_release" "redis" {
+  name       = "my-redis"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "redis"
+  namespace  = "default"
+}
+
+resource "helm_release" "kubecost" {
+  name       = "kubecost"
+  repository = "https://kubecost.github.io/cost-analyzer/"
+  chart      = "cost-analyzer"
+  namespace  = "default"
+}
