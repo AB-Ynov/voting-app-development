@@ -4,7 +4,7 @@
 ## Prérequis
 
 - Terraform
-```bash
+
 # Téléchargez le binaire Terraform pour Linux
 curl -O https://releases.hashicorp.com/terraform/0.14.9/terraform_0.14.9_linux_amd64.zip
 
