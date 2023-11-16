@@ -10,47 +10,48 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Set up Terraform
-      uses: hashicorp/setup-terraform@v1
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
 
-    - name: Terraform Init and Validate
-      run: |
-        terraform init
-        terraform validate
+      - name: Terraform Init
+        run: terraform init
 
-    - name: Terraform Plan
-      run: terraform plan -out=tfplan
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
 
   infra-cost:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Install InfraCost
-      run: |
-        curl -s https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | bash -s -- -b $HOME/bin
+      - name: Install InfraCost
+        run: |
+          curl -s https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | bash -s -- -b $HOME/bin
 
-    - name: Execute InfraCost
-      run: infracost --tfdir .terraform/providers/registry.terraform.io/hashicorp/
+      - name: Execute InfraCost
+        run: infracost --path /chemin/vers/votre/projet
 
   apply:
     runs-on: ubuntu-latest
 
-    needs: [terraform]
+    needs: [terraform, infra-cost]
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Wait for Manual Approval
-      id: manual-approval
-      run: echo "Waiting for manual approval"
+      - name: Wait for Manual Approval
+        id: manual-approval
+        run: echo "Waiting for manual approval"
 
-    - name: Terraform Apply
-      if: github.event_name == 'workflow_run' && github.event.workflow_run.event == 'workflow_run.completed' && needs.terraform.outcome == 'success' && needs.infra-cost.outcome == 'success' && steps.manual-approval.conclusion == 'success'
-      run: terraform apply tfplan
+      - name: Terraform Apply
+        if: github.event_name == 'workflow_run' && github.event.workflow_run.event == 'workflow_run.completed' && needs.terraform.outcome == 'success' && needs.infra-cost.outcome == 'success' && steps.manual-approval.conclusion == 'success'
+        run: terraform apply tfplan
